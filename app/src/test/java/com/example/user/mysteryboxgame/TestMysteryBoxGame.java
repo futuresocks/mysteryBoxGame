@@ -2,6 +2,7 @@ package com.example.user.mysteryboxgame;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,11 +14,13 @@ public class TestMysteryBoxGame {
 
     MysteryBoxGame game;
     int boxes;
+    Box box;
 
     @Before
     public void setUp(){
         game = new MysteryBoxGame();
         game.begin();
+        box = new Box(2, Amount.FIFTYTHOUSAND);
         boxes = Amount.values().length;
     }
 
@@ -35,9 +38,10 @@ public class TestMysteryBoxGame {
 
     @Test
     public void returnedBoxHasProperties() throws Exception {
-        Box choice = game.pickBox(1);
-        assertEquals("", choice.getNumber());
-//        assertEquals("", choice.getColour());
-//        assertEquals("", choice.getPrize());
+        MysteryBoxGame spyGame = Mockito.spy(game);
+        Mockito.when(spyGame.pickBox(1)).thenReturn(box);
+        assertEquals(2, spyGame.pickBox(1).getNumber());
+        assertEquals("Red", spyGame.pickBox(1).getColour());
+        assertEquals(50000, spyGame.pickBox(1).getPrize());
     }
 }

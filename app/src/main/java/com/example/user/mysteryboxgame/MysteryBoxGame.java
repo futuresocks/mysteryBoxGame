@@ -25,7 +25,7 @@ public class MysteryBoxGame {
         Collections.shuffle(amounts);
 
         for (int i = 0; i < Amount.values().length; i++) {
-            Box box = new Box(i, amounts.get(i));
+            Box box = new Box(i + 1, amounts.get(i));
             this.boxes.add(box);
         }
     }
